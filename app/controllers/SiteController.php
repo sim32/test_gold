@@ -122,4 +122,11 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionHello()
+    {
+        $yiiName = 'Yii2';
+        return $this->render('hello', array('yiiName' => $yiiName));
+        // return $this->render('hello'); // вызов параметра без передачи параметров (тиривиальный)
+    }
 }
