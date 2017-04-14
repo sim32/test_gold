@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -125,6 +126,8 @@ class SiteController extends Controller
 
     public function actionHello()
     {
+        $a = User::find('admin')->all();
+        $b = $a[0]->email;
         $yiiName = 'Yii2';
         return $this->render('hello', array('yiiName' => $yiiName));
         // return $this->render('hello'); // вызов параметра без передачи параметров (тиривиальный)
