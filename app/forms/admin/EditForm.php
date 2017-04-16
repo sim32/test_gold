@@ -2,18 +2,15 @@
 
 namespace app\forms\admin;
 
-use Yii;
 use yii\base\Model;
 
 
 class EditForm extends Model
 {
-    //public $id;
     public $name;
     public $phone;
     public $email;
     public $role_id;
-    //public $password;
     public $active;
 
     public function rules()

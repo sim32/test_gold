@@ -2,6 +2,7 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use app\models\Role;
 ?>
 <? if (!empty($data['error'])): ?>
 
@@ -28,7 +29,7 @@ use yii\helpers\Html;
         <?= $form->field($model, 'email') ?>
 
         <?= $form->field($model, 'role_id')->dropdownList(
-            \app\models\Role::find()->select(['title', 'id'])->indexBy('id')->column(),
+            Role::find()->select(['title', 'id'])->indexBy('id')->column(),
             ['prompt'=>'Select Category']
         )
         ?>
@@ -43,9 +44,6 @@ use yii\helpers\Html;
                 'selected' => $model->active
             ]);
         ?>
-
-
-        <?/*= $form->field($model, 'body')->textarea(['rows' => 6]) */?>
 
         <div class="form-group">
             <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>

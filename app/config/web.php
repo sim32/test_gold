@@ -45,6 +45,7 @@ $config = [
                 '<controller>/<action>' => '<controller>/<action>',
                 '/user/activate/<mail:(\w|\W)+>:<link:(\w|\W)+>' => 'user/activate',
                 '/admin/edit/<user_id:(\d)*>' => 'admin/edit',
+                '/admin/delete/<user_id:(\d)+>' => 'admin/delete',
             ],
         ],
     ],

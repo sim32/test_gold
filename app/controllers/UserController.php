@@ -16,6 +16,27 @@ use yii\web\Controller;
 
 class UserController extends Controller
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+        ];
+    }
+
+    /**
+     * поприветствовать текущего пользователя
+     * @return string|\yii\web\Response
+     */
     public function actionIndex()
     {
         if (!Access::can(Yii::$app->controller->getRoute()) || empty($user = User::getCurrentUser())) {
@@ -27,6 +48,11 @@ class UserController extends Controller
         ]);
     }
 
+
+    /**
+     * страница авторизации
+     * @return string|\yii\web\Response
+     */
     public function actionLogin()
     {
         $loginForm = new \app\forms\LoginForm();
@@ -40,12 +66,22 @@ class UserController extends Controller
         ]);
     }
 
+
+    /**
+     * страница выхода
+     * @return \yii\web\Response
+     */
     public function actionLogout()
     {
         User::logout();
         return $this->redirect('/');
     }
 
+
+    /**
+     * Страница регистрации
+     * @return string|\yii\web\Response
+     */
     public function actionRegistration()
     {
         $registrationForm = new RegistrationForm();
@@ -54,18 +90,24 @@ class UserController extends Controller
             $registrationForm->load(Yii::$app->request->post()) &&
             $registrationForm->validate() &&
             User::createFromArray(Yii::$app->request->post()['RegistrationForm']) &&
-            $registrationForm->sendLink()
+            $body = $registrationForm->sendLink()
         ) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
         }
 
         return $this->render('registration', [
-            'model' => $registrationForm,
+            'mailBody'  => $body,
+            'model'     => $registrationForm,
         ]);
     }
 
+
+    /**
+     * Сюда пользователь должен придти по ссылке активации аккаунта
+     * @param $mail
+     * @param $link
+     * @return string
+     */
     public function actionActivate($mail, $link)
     {
         // $mail = filter_var($mail, FILTER_VALIDATE_EMAIL);
