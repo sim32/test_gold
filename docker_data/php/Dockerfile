@@ -38,6 +38,7 @@ RUN echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/docker-php-ex
 RUN echo "xdebug.remote_host=172.17.0.1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "xdebug.remote_mode=req" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN echo "memory_limit = 512M" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "cgi.fix_pathinfo=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 COPY init.sh /init.sh
 

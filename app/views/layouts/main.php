@@ -8,6 +8,8 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\User;
+use app\components\Access;
 
 AppAsset::register($this);
 ?>
@@ -36,22 +38,21 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Привет', 'url' => ['/site/hello']],
+            /*['label' => 'Привет', 'url' => ['/site/hello']],
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
+            ['label' => 'Contact', 'url' => ['/site/contact']],*/
+            Access::can('admin/index') ? ['label' => 'Список пользователей', 'url' => ['/admin/index']] : '',
+            User::getCurrentUser() ?
+                ('<li>'
+                    . Html::beginForm(['/user/logout'], 'post')
+                    . Html::submitButton(
+                        'Logout',
+                        ['class' => 'btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>') :
+                '',
         ],
     ]);
     NavBar::end();

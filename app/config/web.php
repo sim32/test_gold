@@ -38,16 +38,19 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<controller>/<action>' => '<controller>/<action>',
+                '/user/activate/<mail:(\w|\W)+>:<link:(\w|\W)+>' => 'user/activate',
+                '/admin/edit/<user_id:(\d)*>' => 'admin/edit',
             ],
         ],
-        */
     ],
     'params' => $params,
+
+    'defaultRoute' => 'user/index',
 ];
 
 if (YII_ENV_DEV) {
